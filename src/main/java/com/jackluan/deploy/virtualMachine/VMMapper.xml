@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jackluan.deploy.virtualMachine.VMMapper">
+    <resultMap id="BaseResultMap" type="com.jackluan.deploy.virtualMachine.entity.VMEntity">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="ip" property="ip" jdbcType="INTEGER"/>
+        <result column="port" property="port" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, ip, port, status
+    </sql>
+
+    <insert id="insert" parameterType="com.jackluan.deploy.virtualMachine.entity.VMEntity">
+        INSERT INTO virtual_machine(id,ip,port,status)
+        VALUES(#{id,jdbcType=VARCHAR},#{ip,jdbcType=VARCHAR},#{port,jdbcType=VARCHAR},#{status,jdbcType=INTEGER});
+    </insert>
+
+    <update id="update" parameterType="com.jackluan.deploy.virtualMachine.entity.VMEntity">
+        UPDATE virtual_machine SET ip=#{ip} , port=#{port} , status = #{status} WHERE id=#{id}
+    </update>
+
+    <select id="query" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from virtual_machine where id=#{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.String">
+        DELETE FROM virtual_machine WHERE id=#{id,jdbcType=VARCHAR})
+    </delete>
+</mapper>
